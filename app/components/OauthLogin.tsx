@@ -1,8 +1,38 @@
-"use client";
-
 import Image from "next/image";
+import { createClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default function OauthLogin() {
+  const signIn = async () => {
+    "use server";
+
+    // create supabse client
+    const supabase = await createClient();
+    const headersList = await headers();
+    const origin = headersList.get("origin");
+
+    // authentication
+    console.log(origin);
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${origin}/auth/callback`,
+        // queryParams: {
+        //   access_type: "offline",
+        //   prompt: "consent",
+        // },
+      },
+    });
+
+    if (error) {
+      console.log(error);
+    } else {
+      return redirect(data.url);
+    }
+  };
+
   return (
     <>
       {/*
@@ -27,7 +57,7 @@ export default function OauthLogin() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow-sm sm:rounded-lg sm:px-12">
-            <form action="#" method="POST" className="space-y-6">
+            <form action={signIn} className="space-y-6">
               {/* <div>
                 <label
                   htmlFor="email"
@@ -70,12 +100,12 @@ export default function OauthLogin() {
                 <div className="flex gap-3">
                   <div className="flex h-6 shrink-0 items-center">
                     <div className="group grid size-4 grid-cols-1">
-                      <input
+                      {/* <input
                         id="remember-me"
                         name="remember-me"
                         type="checkbox"
                         className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                      />
+                      /> */}
                       <svg
                         fill="none"
                         viewBox="0 0 14 14"
@@ -98,22 +128,22 @@ export default function OauthLogin() {
                       </svg>
                     </div>
                   </div>
-                  <label
+                  {/* <label
                     htmlFor="remember-me"
                     className="block text-sm/6 text-gray-900"
                   >
                     Remember me
-                  </label>
+                  </label> */}
                 </div>
 
-                <div className="text-sm/6">
+                {/* <div className="text-sm/6">
                   <a
                     href="#"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot password?
                   </a>
-                </div>
+                </div> */}
               </div>
 
               <div>

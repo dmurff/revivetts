@@ -3,7 +3,7 @@ import OauthLogin from "@/app/components/OauthLogin";
 export default function Home() {
   return (
     <>
-      <OauthLogin />
+      <h1 className="text-black text-4xl">HEllow app!</h1>
     </>
   );
 }
