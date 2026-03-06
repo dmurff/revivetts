@@ -12,6 +12,6 @@ async function getJobs() {
 }
 export default async function Jobs() {
   const jobs = await getJobs();
-
+console.log(jobs);
   return <JobsDashboard jobs={jobs} />;
 }
