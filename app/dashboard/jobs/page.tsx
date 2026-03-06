@@ -1,7 +1,17 @@
+import "server-only";
+import { createClient } from "@/lib/supabase/server";
+import JobsDashboard from "@/app/components/JobsDashboard";
+
+async function getJobs() {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("jobs").select("*");
+  if (error) {
+    console.error(error);
+  }
+  return data;
+}
 export default async function Jobs() {
-  return (
-    <>
-      <p className="text-4xl text-center text-black mr-[25%]">Jobs</p>
-    </>
-  );
+  const jobs = await getJobs();
+
+  return <JobsDashboard jobs={jobs} />;
 }
