@@ -1,8 +1,9 @@
+import AddJobForm from "@/app/components/AddJobForm";
+
 export default async function AddJob() {
   return (
     <div>
-      <h1>Add Job</h1>
+      <AddJobForm />
     </div>
   );
 }
-
