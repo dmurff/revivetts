@@ -1,4 +1,6 @@
 import "server-only";
+export const dynamic = "force-dynamic";
+
 import { createClient } from "@/lib/supabase/server";
 import JobsDashboard from "@/app/components/JobsDashboard";
 import { redirect } from "next/navigation";
